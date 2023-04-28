@@ -8,4 +8,4 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ##  Guide and Usage
 
-User can log in with any credentials provided the username field is not empty and password is equal to greater than 6 characters
+User can log in with any credentials provided the username field is not empty and password is equal or greater than 6 characters

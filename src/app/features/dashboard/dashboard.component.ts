@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   tableCol = [
     'estDepartureAirport',
+    'firstSeen',
     'estArrivalAirport',
     'lastSeen',
     'departureAirportCandidatesCount',
@@ -28,9 +29,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   tableTitle = [
     'departure airpoort',
+    'departure time',
     'arrival airport',
-    'time',
-    'departre count',
+    'arival time',
+    'departure count',
     'arrival count',
   ];
 
@@ -46,8 +48,29 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   private onLoad(): Observable<MatTableDataSource<Flight>> {
     return this.dashboard.loadflight().pipe(
-      map((flight) => {
-        const datasource = new MatTableDataSource(flight);
+      map((flights) => {
+        const data: Flight[] = flights.map((flight) => {
+          return {
+            estDepartureAirport: flight.estDepartureAirport,
+            estArrivalAirport: flight.estArrivalAirport,
+            lastSeen: flight.lastSeen * 1000,
+            departureAirportCandidatesCount:
+              flight.departureAirportCandidatesCount,
+            arrivalAirportCandidatesCount: flight.arrivalAirportCandidatesCount,
+            callsign: flight.callsign,
+            estArrivalAirportHorizDistance:
+              flight.estArrivalAirportHorizDistance,
+            estArrivalAirportVertDistance: flight.estArrivalAirportVertDistance,
+            estDepartureAirportHorizDistance:
+              flight.estDepartureAirportHorizDistance,
+            estDepartureAirportVertDistance:
+              flight.estDepartureAirportVertDistance,
+            firstSeen: flight.firstSeen * 1000,
+            icao24: flight.icao24,
+          };
+        });
+
+        const datasource = new MatTableDataSource(data);
         datasource.paginator = this.paginator;
         return datasource;
       })
